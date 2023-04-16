@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 
 export async function GET(request) {
-  const response = await fetch('https://www.reddit.com/r/askreddit/top.json');
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get('type');
+  const limit = searchParams.get('limit');
+  const after = searchParams.get('after');
+
+  const response = await fetch(
+    `https://www.reddit.com/r/askreddit/${type}.json?limit=${limit}&after=${after}`
+  );
   let posts = await response.json();
 
   posts = posts.data.children.map((post) => {
@@ -19,7 +26,3 @@ export async function GET(request) {
 
   return NextResponse.json(posts);
 }
-
-// TODO: NSFW Filter
-// TODO: Pagination
-// TODO: TAKE TYPE FROM FRONTEND
