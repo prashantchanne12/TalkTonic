@@ -13,8 +13,26 @@ import {
   RocketLaunchIcon,
 } from '@heroicons/react/24/outline';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Types = () => {
+  const [posts, setPosts] = useState([]);
+  const headers = {
+    'User-Agent': 'Reddit Bot',
+  };
+
+  useEffect(() => {
+    async function getPosts() {
+      const response = await fetch('/api/posts');
+      const posts = await response.json();
+      console.log(posts);
+      setPosts(posts);
+    }
+
+    getPosts();
+  }, []);
+
   const data = [
     {
       label: 'Hot',
