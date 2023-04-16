@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={mont.className}>
         <Header />
-        <main className='container'>{children}</main>
+        <main className=''>{children}</main>
       </body>
     </html>
   );
