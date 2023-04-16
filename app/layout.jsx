@@ -1,5 +1,6 @@
 import { Lato } from 'next/font/google';
 import './globals.css';
+import Header from './components/Header';
 
 const mont = Lato({
   weight: ['400', '700', '900'],
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body className={mont.className}>
+        <Header />
         <main className='container'>{children}</main>
       </body>
     </html>
