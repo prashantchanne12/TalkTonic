@@ -1,5 +1,11 @@
+import TabContent from './components/TabContent';
+
 const HomePage = () => {
-  return <div className='text-3xl'></div>;
+  return (
+    <div>
+      <TabContent />
+    </div>
+  );
 };
 
 export default HomePage;
