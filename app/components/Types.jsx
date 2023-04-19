@@ -26,6 +26,7 @@ import { SubRedditContext } from '../context/SubRedditContext';
 import { NsfwContext } from '../context/NsfwContext';
 import { spaceGrotesk } from '../utils/fonts';
 import { convertToK, utcToLocal } from '../utils/date';
+import Skeleton from './Skeleton';
 
 const Types = () => {
   const [index, setIndex] = useState(5);
@@ -152,7 +153,7 @@ const Types = () => {
             }}
           >
             {loading ? (
-              <div>Loading...</div>
+              <Skeleton />
             ) : (
               posts.map((post) => (
                 <TabPanel key={type} value={type}>
@@ -186,6 +187,7 @@ const Types = () => {
       </Tabs>
       <div className='flex justify-center gap-5 my-2'>
         <Button
+          color='pink'
           ripple={true}
           onClick={() => handlePagination(false)}
           disabled={index - 5 <= 0}
@@ -193,6 +195,7 @@ const Types = () => {
           <ArrowLeftIcon strokeWidth={2} className='h-5 w-5' />
         </Button>
         <Button
+          color='pink'
           ripple={true}
           onClick={() => handlePagination(true)}
           disabled={index + 1 > allPosts.length}
