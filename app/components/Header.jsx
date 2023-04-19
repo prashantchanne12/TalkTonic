@@ -1,4 +1,4 @@
-import { monoTon, tourney } from '../utils/fonts';
+import { tourney } from '../utils/fonts';
 
 const Header = () => {
   return (

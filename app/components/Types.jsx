@@ -14,13 +14,13 @@ import {
   RocketLaunchIcon,
   ArrowRightIcon,
   ArrowLeftIcon,
+  HeartIcon,
 } from '@heroicons/react/24/outline';
-import React, { useContext } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SubRedditContext } from '../context/SubRedditContext';
 import { NsfwContext } from '../context/NsfwContext';
 import { spaceGrotesk } from '../utils/fonts';
+import { convertToK, utcToLocal } from '../utils/date';
 
 const Types = () => {
   const [index, setIndex] = useState(5);
@@ -121,6 +121,10 @@ const Types = () => {
                     <h2 className='cursor-pointer text-lg font-bold text-black'>
                       <p className={spaceGrotesk.className}>{post.title}</p>
                     </h2>
+                    <HeartIcon className='h-5 w-5' />
+                    <div>{convertToK(post.upvotes)}</div>
+                    <div>{'@' + post.author}</div>
+                    <div>{utcToLocal(post.created)}</div>
                   </div>
                 </TabPanel>
               ))
