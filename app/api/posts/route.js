@@ -6,6 +6,7 @@ export async function GET(request) {
   const type = searchParams.get('type');
   const limit = searchParams.get('limit');
   const after = searchParams.get('after');
+  const isNsfw = searchParams.get('nsfw');
 
   const response = await fetch(
     `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}&after=${after}`
@@ -24,6 +25,10 @@ export async function GET(request) {
     };
     return newPost;
   });
+
+  if (isNsfw === 'false') {
+    posts = posts.filter((post) => post.over_18 === false);
+  }
 
   return NextResponse.json(posts);
 }

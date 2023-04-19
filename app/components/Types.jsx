@@ -19,6 +19,7 @@ import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { SubRedditContext } from '../context/SubRedditContext';
+import { NsfwContext } from '../context/NsfwContext';
 
 const Types = () => {
   const [index, setIndex] = useState(5);
@@ -27,12 +28,13 @@ const Types = () => {
   const [type, setType] = useState('hot');
   const [loading, setLoading] = useState(false);
   const { subReddit } = useContext(SubRedditContext);
+  const { isNsfw } = useContext(NsfwContext);
 
   const fetchPosts = async (value) => {
     setLoading(true);
     setType(value);
     const response = await fetch(
-      `/api/posts?type=${value}&limit=15&sub=${subReddit}`
+      `/api/posts?type=${value}&limit=15&sub=${subReddit}&nsfw=${isNsfw}`
     );
     const posts = await response.json();
     setAllPosts(posts);
@@ -56,7 +58,7 @@ const Types = () => {
   useEffect(() => {
     const fetchInitialPosts = async () => {
       const response = await fetch(
-        `/api/posts?type=${type}&limit=15&sub=${subReddit}`
+        `/api/posts?type=${type}&limit=15&sub=${subReddit}&nsfw=${isNsfw}`
       );
       const posts = await response.json();
       setAllPosts(posts);
@@ -66,7 +68,7 @@ const Types = () => {
 
     setLoading(true);
     fetchInitialPosts();
-  }, [subReddit]);
+  }, [subReddit, isNsfw]);
 
   const data = [
     {
@@ -87,39 +89,43 @@ const Types = () => {
   ];
 
   return (
-    <>
+    <div>
       <Tabs id='custom-animation' value='hot'>
-        <TabsHeader>
-          {data.map(({ label, value, icon }) => (
-            <Tab key={value} value={value} onClick={() => fetchPosts(value)}>
-              <div className='flex items-center gap-2'>
-                {React.createElement(icon, { className: 'w-5 h-5' })}
-                {label}
-              </div>
-            </Tab>
-          ))}
-        </TabsHeader>
-        <TabsBody
-          animate={{
-            initial: { y: 250 },
-            mount: { y: 0 },
-            unmount: { y: 250 },
-          }}
-        >
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            posts.map((post) => (
-              <TabPanel key={type} value={type}>
-                <div className='shadow-md rounded p-6'>
-                  <h2 className='cursor-pointer text-lg font-bold text-black'>
-                    {post.title}
-                  </h2>
+        <div className='sticky top-0'>
+          <TabsHeader>
+            {data.map(({ label, value, icon }) => (
+              <Tab key={value} value={value} onClick={() => fetchPosts(value)}>
+                <div className='flex items-center gap-2'>
+                  {React.createElement(icon, { className: 'w-5 h-5' })}
+                  {label}
                 </div>
-              </TabPanel>
-            ))
-          )}
-        </TabsBody>
+              </Tab>
+            ))}
+          </TabsHeader>
+        </div>
+        <div>
+          <TabsBody
+            animate={{
+              initial: { y: 250 },
+              mount: { y: 0 },
+              unmount: { y: 250 },
+            }}
+          >
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              posts.map((post) => (
+                <TabPanel key={type} value={type}>
+                  <div className='shadow-md rounded p-6'>
+                    <h2 className='cursor-pointer text-lg font-bold text-black'>
+                      {post.title}
+                    </h2>
+                  </div>
+                </TabPanel>
+              ))
+            )}
+          </TabsBody>
+        </div>
       </Tabs>
       <div className='flex justify-center gap-5 my-2'>
         <Button ripple={true} onClick={() => handlePagination(false)}>
@@ -129,7 +135,7 @@ const Types = () => {
           <ArrowRightIcon strokeWidth={2} className='h-5 w-5' />
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

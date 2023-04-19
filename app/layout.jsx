@@ -18,8 +18,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body className={mont.className}>
-        <Header />
-        <main className=''>{children}</main>
+        <div className='relative'>
+          <Header />
+          <main className=''>{children}</main>
+        </div>
       </body>
     </html>
   );
