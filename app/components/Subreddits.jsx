@@ -38,15 +38,15 @@ const Subreddits = () => {
                 className={({ active, checked }) =>
                   `${
                     active
-                      ? 'ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-sky-300'
+                      ? 'ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-[#FF2E63]'
                       : ''
                   }
                     ${
                       checked
-                        ? 'bg-blue-900 bg-opacity-75 text-white'
+                        ? 'bg-[#FF2E63] bg-opacity-75 text-white'
                         : 'bg-white'
                     }
-                      relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
+                      relative flex cursor-pointer rounded-lg px-5 py-4 shadow-lg focus:outline-none`
                 }
               >
                 {({ active, checked }) => (

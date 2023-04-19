@@ -9,13 +9,18 @@ import {
   Button,
 } from '@material-tailwind/react';
 import {
-  FireIcon,
-  HandThumbUpIcon,
-  RocketLaunchIcon,
+  FireIcon as FireIconOutlined,
+  HandThumbUpIcon as HandThumbUpIconOutlined,
+  RocketLaunchIcon as RocketLaunchIconOutlined,
   ArrowRightIcon,
   ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
-import { HeartIcon } from '@heroicons/react/24/solid';
+import {
+  HeartIcon,
+  FireIcon,
+  RocketLaunchIcon,
+  HandThumbUpIcon,
+} from '@heroicons/react/24/solid';
 import React, { useContext, useEffect, useState } from 'react';
 import { SubRedditContext } from '../context/SubRedditContext';
 import { NsfwContext } from '../context/NsfwContext';
@@ -75,19 +80,51 @@ const Types = () => {
     {
       label: 'Hot',
       value: 'hot',
-      icon: FireIcon,
+      icon: FireIconOutlined,
     },
     {
       label: 'New',
       value: 'new',
-      icon: RocketLaunchIcon,
+      icon: RocketLaunchIconOutlined,
     },
     {
       label: 'Top',
       value: 'top',
-      icon: HandThumbUpIcon,
+      icon: HandThumbUpIconOutlined,
     },
   ];
+
+  const getClasses = (value) => {
+    if (value === 'new') {
+      return 'text-[#2980b9] font-bold';
+    }
+
+    if (value === 'hot') {
+      return 'text-[#e67e22] font-bold';
+    }
+
+    if (value === 'top') {
+      return 'text-[#16a085] font-bold';
+    }
+
+    return '';
+  };
+
+  const getIcon = (value) => {
+    if (value === 'new') {
+      return RocketLaunchIcon;
+    }
+
+    if (value === 'hot') {
+      return FireIcon;
+    }
+
+    if (value === 'top') {
+      return HandThumbUpIcon;
+    }
+
+    return '';
+  };
 
   return (
     <div>
@@ -96,9 +133,11 @@ const Types = () => {
           <TabsHeader>
             {data.map(({ label, value, icon }) => (
               <Tab key={value} value={value} onClick={() => fetchPosts(value)}>
-                <div className='flex items-center gap-2'>
-                  {React.createElement(icon, { className: 'w-5 h-5' })}
-                  {label}
+                <div className='flex items-center gap-2 py-1'>
+                  {React.createElement(value === type ? getIcon(type) : icon, {
+                    className: `w-5 h-5 ${value === type && getClasses(type)}`,
+                  })}
+                  <p className={value === type && getClasses(type)}>{label}</p>
                 </div>
               </Tab>
             ))}
