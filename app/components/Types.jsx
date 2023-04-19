@@ -119,7 +119,13 @@ const Types = () => {
                 <TabPanel key={type} value={type}>
                   <div className='shadow-md rounded p-6'>
                     <h2 className='cursor-pointer text-lg font-bold text-black'>
-                      <p className={spaceGrotesk.className}>{post.title}</p>
+                      <a
+                        href={post.url}
+                        target='_blank'
+                        className={spaceGrotesk.className}
+                      >
+                        {post.title}
+                      </a>
                     </h2>
                     <HeartIcon className='h-5 w-5' />
                     <div>{convertToK(post.upvotes)}</div>
