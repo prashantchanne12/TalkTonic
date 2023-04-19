@@ -56,7 +56,7 @@ const Types = () => {
   useEffect(() => {
     const fetchInitialPosts = async () => {
       const response = await fetch(
-        `/api/posts?type=hot&limit=15&sub=${subReddit}`
+        `/api/posts?type=${type}&limit=15&sub=${subReddit}`
       );
       const posts = await response.json();
       setAllPosts(posts);
@@ -134,7 +134,3 @@ const Types = () => {
 };
 
 export default Types;
-
-// CREATE 3 different state
-
-// NO pagination just add infinite scrolling.
