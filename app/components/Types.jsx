@@ -97,15 +97,15 @@ const Types = () => {
 
   const getClasses = (value) => {
     if (value === 'new') {
-      return 'text-[#2980b9] font-bold';
+      return 'text-[#2980b9] font-bold animate-pulse icon';
     }
 
     if (value === 'hot') {
-      return 'text-[#e67e22] font-bold';
+      return 'text-[#e67e22] font-bold animate-pulse icon';
     }
 
     if (value === 'top') {
-      return 'text-[#16a085] font-bold';
+      return 'text-[#16a085] font-bold animate-pulse icon';
     }
 
     return '';
@@ -157,7 +157,7 @@ const Types = () => {
             ) : (
               posts.map((post) => (
                 <TabPanel key={type} value={type}>
-                  <div className='shadow-md rounded-lg pt-6 pl-6 pr-6 relative'>
+                  <div className='shadow-md rounded-lg pt-6 pl-6 pr-6 relative hover:scale-105 duration-700 transform transition-all ease-out'>
                     <h2 className='cursor-pointer text-lg font-bold text-black'>
                       <a
                         href={post.url}
