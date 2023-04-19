@@ -20,6 +20,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { SubRedditContext } from '../context/SubRedditContext';
 import { NsfwContext } from '../context/NsfwContext';
+import { spaceGrotesk } from '../utils/fonts';
 
 const Types = () => {
   const [index, setIndex] = useState(5);
@@ -118,7 +119,7 @@ const Types = () => {
                 <TabPanel key={type} value={type}>
                   <div className='shadow-md rounded p-6'>
                     <h2 className='cursor-pointer text-lg font-bold text-black'>
-                      {post.title}
+                      <p className={spaceGrotesk.className}>{post.title}</p>
                     </h2>
                   </div>
                 </TabPanel>

@@ -31,10 +31,10 @@ const Subreddits = () => {
         <RadioGroup value={selected} onChange={handleChange}>
           <RadioGroup.Label className='sr-only'>Server size</RadioGroup.Label>
           <div className='space-y-2'>
-            {subReddits.map((plan) => (
+            {subReddits.map((subReddit) => (
               <RadioGroup.Option
-                key={plan.name}
-                value={plan}
+                key={subReddit.name}
+                value={subReddit}
                 className={({ active, checked }) =>
                   `${
                     active
@@ -60,7 +60,7 @@ const Subreddits = () => {
                               checked ? 'text-white' : 'text-gray-900'
                             }`}
                           >
-                            {plan.name}
+                            {subReddit.name}
                           </RadioGroup.Label>
                         </div>
                       </div>

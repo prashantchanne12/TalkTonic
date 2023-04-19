@@ -1,11 +1,6 @@
-import { Lato } from 'next/font/google';
 import './globals.css';
 import Header from './components/Header';
-
-const mont = Lato({
-  weight: ['400', '700', '900'],
-  subsets: ['latin'],
-});
+import { spaceGrotesk } from './utils/fonts';
 
 export const metadata = {
   title: 'TalkTonic',
@@ -17,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-      <body className={mont.className}>
+      <body className={spaceGrotesk.className}>
         <div className='relative'>
           <Header />
           <main className=''>{children}</main>
