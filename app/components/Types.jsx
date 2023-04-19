@@ -185,10 +185,18 @@ const Types = () => {
         </div>
       </Tabs>
       <div className='flex justify-center gap-5 my-2'>
-        <Button ripple={true} onClick={() => handlePagination(false)}>
+        <Button
+          ripple={true}
+          onClick={() => handlePagination(false)}
+          disabled={index - 5 <= 0}
+        >
           <ArrowLeftIcon strokeWidth={2} className='h-5 w-5' />
         </Button>
-        <Button ripple={true} onClick={() => handlePagination(true)}>
+        <Button
+          ripple={true}
+          onClick={() => handlePagination(true)}
+          disabled={index + 1 > allPosts.length}
+        >
           <ArrowRightIcon strokeWidth={2} className='h-5 w-5' />
         </Button>
       </div>
