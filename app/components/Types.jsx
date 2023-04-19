@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { SubRedditContext } from '../context/SubRedditContext';
 
 const Types = () => {
-  con;
+  const [index, setIndex] = useState(5);
   const [posts, setPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [type, setType] = useState('hot');
@@ -32,32 +32,39 @@ const Types = () => {
     setLoading(true);
     setType(value);
     const response = await fetch(
-      `/api/posts?type=${value}&limit=5&sub=${subReddit}`
+      `/api/posts?type=${value}&limit=15&sub=${subReddit}`
     );
     const posts = await response.json();
-    setPosts(posts);
+    setAllPosts(posts);
+    setPosts(posts.slice(0, 5));
+    setIndex(5);
     setLoading(false);
   };
 
   const handlePagination = (isNext) => {
     if (isNext) {
-      // NEXT
-      // Add more posts to the array
-      // Once you exhaust all the posts make new request for more posts
+      const nextFivePosts = allPosts.slice(index, index + 5);
+      setIndex(index + 5);
+      setPosts(nextFivePosts);
     } else {
-      // PREV
-      // Just traverse through the array
+      const prevFivePosts = allPosts.slice(index - 10, index - 5);
+      setIndex(index - 5);
+      setPosts(prevFivePosts);
     }
   };
 
   useEffect(() => {
     const fetchInitialPosts = async () => {
       const response = await fetch(
-        `/api/posts?type=hot&limit=5&sub=${subReddit}`
+        `/api/posts?type=hot&limit=15&sub=${subReddit}`
       );
       const posts = await response.json();
-      setPosts(posts);
+      setAllPosts(posts);
+      setPosts(posts.slice(0, 5));
+      setLoading(false);
     };
+
+    setLoading(true);
     fetchInitialPosts();
   }, [subReddit]);
 
@@ -115,10 +122,10 @@ const Types = () => {
         </TabsBody>
       </Tabs>
       <div className='flex justify-center gap-5 my-2'>
-        <Button ripple={true} onClick={handlePagination(false)}>
+        <Button ripple={true} onClick={() => handlePagination(false)}>
           <ArrowLeftIcon strokeWidth={2} className='h-5 w-5' />
         </Button>
-        <Button ripple={true} onClick={handlePagination(true)}>
+        <Button ripple={true} onClick={() => handlePagination(true)}>
           <ArrowRightIcon strokeWidth={2} className='h-5 w-5' />
         </Button>
       </div>
@@ -127,3 +134,7 @@ const Types = () => {
 };
 
 export default Types;
+
+// CREATE 3 different state
+
+// NO pagination just add infinite scrolling.
