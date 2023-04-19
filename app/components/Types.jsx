@@ -14,8 +14,8 @@ import {
   RocketLaunchIcon,
   ArrowRightIcon,
   ArrowLeftIcon,
-  HeartIcon,
 } from '@heroicons/react/24/outline';
+import { HeartIcon } from '@heroicons/react/24/solid';
 import React, { useContext, useEffect, useState } from 'react';
 import { SubRedditContext } from '../context/SubRedditContext';
 import { NsfwContext } from '../context/NsfwContext';
@@ -117,7 +117,7 @@ const Types = () => {
             ) : (
               posts.map((post) => (
                 <TabPanel key={type} value={type}>
-                  <div className='shadow-md rounded p-6'>
+                  <div className='shadow-md rounded-lg pt-6 pl-6 pr-6 relative'>
                     <h2 className='cursor-pointer text-lg font-bold text-black'>
                       <a
                         href={post.url}
@@ -127,10 +127,17 @@ const Types = () => {
                         {post.title}
                       </a>
                     </h2>
-                    <HeartIcon className='h-5 w-5' />
-                    <div>{convertToK(post.upvotes)}</div>
-                    <div>{'@' + post.author}</div>
-                    <div>{utcToLocal(post.created)}</div>
+                    <div className='py-5'>
+                      <p className='text-sm text-gray-500'>
+                        Posted by {'@' + post.author} {utcToLocal(post.created)}
+                      </p>
+                    </div>
+                    <div className='flex items-center gap-1 absolute right-3 bottom-2'>
+                      <p className='text-gray-700'>
+                        {convertToK(post.upvotes)}
+                      </p>
+                      <HeartIcon className='h-6 w-6' fill='#FF2E63' />
+                    </div>
                   </div>
                 </TabPanel>
               ))
