@@ -170,12 +170,12 @@ const Types = () => {
                         </span>
                       </a>
                     </h2>
-                    <div className='pb-8 pt-5 md:py-5'>
+                    <div className='pb-8 pt-3 md:py-5'>
                       <p className='max-w-sm truncate md:text-sm text-gray-500'>
                         Posted by {'@' + post.author} {utcToLocal(post.created)}
                       </p>
                     </div>
-                    <div className='flex items-center gap-1 absolute right-3 md:bottom-4'>
+                    <div className='flex items-center gap-1 absolute right-3 bottom-1 md:bottom-4'>
                       <p className='text-gray-700'>
                         {convertToK(post.upvotes)}
                       </p>
