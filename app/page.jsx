@@ -17,7 +17,7 @@ const HomePage = () => {
         <div className='right-5 md:right-[200px] absolute lg:right-[450px] top-[24px]'>
           <NsfwSwitch />
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto mt-7'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl mx-auto mt-7'>
           <div className='md:col-span-2 order-last md:order-first'>
             <Types />
           </div>

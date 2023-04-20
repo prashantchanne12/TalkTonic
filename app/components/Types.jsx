@@ -51,6 +51,7 @@ const Types = () => {
   };
 
   const handlePagination = (isNext) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (isNext) {
       const nextFivePosts = allPosts.slice(index, index + 5);
       setIndex(index + 5);
