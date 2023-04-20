@@ -1,3 +1,5 @@
+'use client';
+
 import { tourney } from '../utils/fonts';
 
 const Header = () => {

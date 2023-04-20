@@ -46,12 +46,12 @@ const Subreddits = () => {
                         ? 'bg-[#FF2E63] bg-opacity-75 text-white'
                         : 'bg-white'
                     }
-                      relative flex cursor-pointer rounded-lg px-5 py-4 shadow-lg focus:outline-none`
+                      relative flex cursor-pointer rounded-lg px-5 py-4 shadow-lg focus:outline-none hover:scale-105 trasnform transition-all duration-300 ease-out`
                 }
               >
                 {({ active, checked }) => (
                   <>
-                    <div className='flex w-full items-center justify-between'>
+                    <div className='flex w-full items-center justify-between '>
                       <div className='flex items-center'>
                         <div className='text-sm'>
                           <RadioGroup.Label
