@@ -41,7 +41,7 @@ const Types = () => {
     setLoading(true);
     setType(value);
     const response = await fetch(
-      `/api/posts?type=${value}&limit=15&sub=${subReddit}&nsfw=${isNsfw}`
+      `/api/posts?type=${value}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
     );
     const posts = await response.json();
     setAllPosts(posts);
@@ -65,7 +65,7 @@ const Types = () => {
   useEffect(() => {
     const fetchInitialPosts = async () => {
       const response = await fetch(
-        `/api/posts?type=${type}&limit=15&sub=${subReddit}&nsfw=${isNsfw}`
+        `/api/posts?type=${type}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
       );
       const posts = await response.json();
       setAllPosts(posts);
