@@ -37,6 +37,27 @@ const Types = () => {
   const { subReddit } = useContext(SubRedditContext);
   const { isNsfw } = useContext(NsfwContext);
 
+  const makePosts = (posts, isNsfw) => {
+    let newPosts = posts.data.children.map((post) => {
+      const newPost = {
+        title: post.data.title,
+        upvotes: post.data.ups,
+        created: post.data.created,
+        over_18: post.data.over_18,
+        author: post.data.author,
+        whitelist_status: post.data.whitelist_status,
+        url: post.data.url,
+      };
+      return newPost;
+    });
+
+    if (isNsfw === "false") {
+      newPosts = posts.filter((post) => post.over_18 === false);
+    }
+
+    return newPosts;
+  };
+
   const fetchPosts = async (value) => {
     setLoading(true);
     setType(value);
@@ -44,8 +65,9 @@ const Types = () => {
       `/api/posts?type=${value}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
     );
     const posts = await response.json();
-    setAllPosts(posts);
-    setPosts(posts.slice(0, 5));
+    const newPosts = makePosts(posts, isNsfw);
+    setAllPosts(newPosts);
+    setPosts(newPosts.slice(0, 5));
     setIndex(5);
     setLoading(false);
   };
@@ -69,8 +91,9 @@ const Types = () => {
         `/api/posts?type=${type}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
       );
       const posts = await response.json();
-      setAllPosts(posts);
-      setPosts(posts.slice(0, 5));
+      const newPosts = makePosts(posts, isNsfw);
+      setAllPosts(newPosts);
+      setPosts(newPosts.slice(0, 5));
       setLoading(false);
     };
 
