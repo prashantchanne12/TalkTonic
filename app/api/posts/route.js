@@ -1,17 +1,17 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import axios from "axios";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const subReddit = searchParams.get('sub');
-  const type = searchParams.get('type');
-  const limit = searchParams.get('limit');
-  const after = searchParams.get('after');
-  const isNsfw = searchParams.get('nsfw');
+  const subReddit = searchParams.get("sub");
+  const type = searchParams.get("type");
+  const limit = searchParams.get("limit");
+  const after = searchParams.get("after");
+  const isNsfw = searchParams.get("nsfw");
 
-  const response = await fetch(
-    `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}&after=${after}`
-  );
-  let posts = await response.json();
+  const url = `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}&after=${after}`;
+  const { data } = await axios.get(url);
+  let posts = data;
 
   posts = posts.data.children.map((post) => {
     const newPost = {
@@ -26,7 +26,7 @@ export async function GET(request) {
     return newPost;
   });
 
-  if (isNsfw === 'false') {
+  if (isNsfw === "false") {
     posts = posts.filter((post) => post.over_18 === false);
   }
 

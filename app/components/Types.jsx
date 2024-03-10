@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Tabs,
@@ -7,32 +7,32 @@ import {
   Tab,
   TabPanel,
   Button,
-} from '@material-tailwind/react';
+} from "@material-tailwind/react";
 import {
   FireIcon as FireIconOutlined,
   HandThumbUpIcon as HandThumbUpIconOutlined,
   RocketLaunchIcon as RocketLaunchIconOutlined,
   ArrowRightIcon,
   ArrowLeftIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
 import {
   HeartIcon,
   FireIcon,
   RocketLaunchIcon,
   HandThumbUpIcon,
-} from '@heroicons/react/24/solid';
-import React, { useContext, useEffect, useState } from 'react';
-import { SubRedditContext } from '../context/SubRedditContext';
-import { NsfwContext } from '../context/NsfwContext';
-import { spaceGrotesk } from '../utils/fonts';
-import { convertToK, utcToLocal } from '../utils/date';
-import Skeleton from './Skeleton';
+} from "@heroicons/react/24/solid";
+import React, { useContext, useEffect, useState } from "react";
+import { SubRedditContext } from "../context/SubRedditContext";
+import { NsfwContext } from "../context/NsfwContext";
+import { spaceGrotesk } from "../utils/fonts";
+import { convertToK, utcToLocal } from "../utils/date";
+import Skeleton from "./Skeleton";
 
 const Types = () => {
   const [index, setIndex] = useState(5);
   const [posts, setPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
-  const [type, setType] = useState('hot');
+  const [type, setType] = useState("hot");
   const [loading, setLoading] = useState(false);
   const { subReddit } = useContext(SubRedditContext);
   const { isNsfw } = useContext(NsfwContext);
@@ -51,7 +51,7 @@ const Types = () => {
   };
 
   const handlePagination = (isNext) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (isNext) {
       const nextFivePosts = allPosts.slice(index, index + 5);
       setIndex(index + 5);
@@ -80,62 +80,62 @@ const Types = () => {
 
   const data = [
     {
-      label: 'Hot',
-      value: 'hot',
+      label: "Hot",
+      value: "hot",
       icon: FireIconOutlined,
     },
     {
-      label: 'New',
-      value: 'new',
+      label: "New",
+      value: "new",
       icon: RocketLaunchIconOutlined,
     },
     {
-      label: 'Top',
-      value: 'top',
+      label: "Top",
+      value: "top",
       icon: HandThumbUpIconOutlined,
     },
   ];
 
   const getClasses = (value) => {
-    if (value === 'new') {
-      return 'text-[#2980b9] font-bold animate-pulse icon';
+    if (value === "new") {
+      return "text-[#2980b9] font-bold animate-pulse icon";
     }
 
-    if (value === 'hot') {
-      return 'text-[#e67e22] font-bold animate-pulse icon';
+    if (value === "hot") {
+      return "text-[#e67e22] font-bold animate-pulse icon";
     }
 
-    if (value === 'top') {
-      return 'text-[#16a085] font-bold animate-pulse icon';
+    if (value === "top") {
+      return "text-[#16a085] font-bold animate-pulse icon";
     }
 
-    return '';
+    return "";
   };
 
   const getIcon = (value) => {
-    if (value === 'new') {
+    if (value === "new") {
       return RocketLaunchIcon;
     }
 
-    if (value === 'hot') {
+    if (value === "hot") {
       return FireIcon;
     }
 
-    if (value === 'top') {
+    if (value === "top") {
       return HandThumbUpIcon;
     }
 
-    return '';
+    return "";
   };
 
   return (
     <div>
-      <Tabs id='custom-animation' value='hot'>
-        <div className='sticky top-0'>
+      <Tabs id="custom-animation" value="hot">
+        <div className="sticky top-0">
           <TabsHeader>
             {data.map(({ label, value, icon }) => (
               <Tab key={value} value={value} onClick={() => fetchPosts(value)}>
-                <div className='flex items-center gap-2 py-1'>
+                <div className="flex items-center gap-2 py-1">
                   {React.createElement(value === type ? getIcon(type) : icon, {
                     className: `w-5 h-5 ${value === type && getClasses(type)}`,
                   })}
@@ -156,30 +156,30 @@ const Types = () => {
             {loading ? (
               <Skeleton />
             ) : (
-              posts.map((post) => (
-                <TabPanel key={type} value={type}>
-                  <div className='shadow-md rounded-lg pt-6 pl-6 pr-6 relative hover:scale-105 duration-700 transform transition-all ease-out'>
-                    <h2 className='cursor-pointer text-lg font-bold text-black'>
+              posts.map((post, index) => (
+                <TabPanel key={index} value={type}>
+                  <div className="shadow-md rounded-lg pt-6 pl-6 pr-6 relative hover:scale-105 duration-700 transform transition-all ease-out">
+                    <h2 className="cursor-pointer text-lg font-bold text-black">
                       <a
                         href={post.url}
-                        target='_blank'
+                        target="_blank"
                         className={spaceGrotesk.className}
                       >
-                        <span className='hover:text-indigo-500'>
+                        <span className="hover:text-indigo-500">
                           {post.title}
                         </span>
                       </a>
                     </h2>
-                    <div className='pb-8 pt-3 md:py-5'>
-                      <p className='max-w-sm truncate md:text-sm text-gray-500'>
-                        Posted by {'@' + post.author} {utcToLocal(post.created)}
+                    <div className="pb-8 pt-3 md:py-5">
+                      <p className="max-w-sm truncate md:text-sm text-gray-500">
+                        Posted by {"@" + post.author} {utcToLocal(post.created)}
                       </p>
                     </div>
-                    <div className='flex items-center gap-1 absolute right-3 bottom-1 md:bottom-4'>
-                      <p className='text-gray-700'>
+                    <div className="flex items-center gap-1 absolute right-3 bottom-1 md:bottom-4">
+                      <p className="text-gray-700">
                         {convertToK(post.upvotes)}
                       </p>
-                      <HeartIcon className='h-6 w-6' fill='#FF2E63' />
+                      <HeartIcon className="h-6 w-6" fill="#FF2E63" />
                     </div>
                   </div>
                 </TabPanel>
@@ -188,22 +188,22 @@ const Types = () => {
           </TabsBody>
         </div>
       </Tabs>
-      <div className='flex justify-center gap-5 my-2'>
+      <div className="flex justify-center gap-5 my-2">
         <Button
-          color='pink'
+          color="pink"
           ripple={true}
           onClick={() => handlePagination(false)}
           disabled={index - 5 <= 0}
         >
-          <ArrowLeftIcon strokeWidth={2} className='h-5 w-5' />
+          <ArrowLeftIcon strokeWidth={2} className="h-5 w-5" />
         </Button>
         <Button
-          color='pink'
+          color="pink"
           ripple={true}
           onClick={() => handlePagination(true)}
           disabled={index + 1 > allPosts.length}
         >
-          <ArrowRightIcon strokeWidth={2} className='h-5 w-5' />
+          <ArrowRightIcon strokeWidth={2} className="h-5 w-5" />
         </Button>
       </div>
     </div>
