@@ -30,6 +30,7 @@ import Skeleton from "./Skeleton";
 
 const Types = () => {
   const [index, setIndex] = useState(5);
+  const [limit, setLimit] = useState(150);
   const [posts, setPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [type, setType] = useState("hot");
@@ -62,7 +63,9 @@ const Types = () => {
     setLoading(true);
     setType(value);
     const response = await fetch(
-      `/api/posts?type=${value}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
+      // COMMENTING BELOW LINE AS THE API ROUTE DOESN'T SEEM TO WORK WHEN DEPLOYED
+      // `/api/posts?type=${value}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
+      `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}`
     );
     const posts = await response.json();
     const newPosts = makePosts(posts, isNsfw);
@@ -88,7 +91,9 @@ const Types = () => {
   useEffect(() => {
     const fetchInitialPosts = async () => {
       const response = await fetch(
-        `/api/posts?type=${type}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
+        // COMMENTING BELOW LINE AS THE API ROUTE DOESN'T SEEM TO WORK WHEN DEPLOYED
+        // `/api/posts?type=${type}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
+        `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}`
       );
       const posts = await response.json();
       const newPosts = makePosts(posts, isNsfw);
