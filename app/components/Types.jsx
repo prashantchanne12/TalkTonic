@@ -52,8 +52,8 @@ const Types = () => {
       return newPost;
     });
 
-    if (isNsfw === "false") {
-      newPosts = posts.filter((post) => post.over_18 === false);
+    if (!isNsfw) {
+      newPosts = newPosts.filter((post) => post.over_18 === false);
     }
 
     return newPosts;
@@ -62,17 +62,20 @@ const Types = () => {
   const fetchPosts = async (value) => {
     setLoading(true);
     setType(value);
-    const response = await fetch(
-      // COMMENTING BELOW LINE AS THE API ROUTE DOESN'T SEEM TO WORK WHEN DEPLOYED
-      // `/api/posts?type=${value}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
-      `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}`
-    );
-    const posts = await response.json();
-    const newPosts = makePosts(posts, isNsfw);
-    setAllPosts(newPosts);
-    setPosts(newPosts.slice(0, 5));
-    setIndex(5);
-    setLoading(false);
+    try {
+      const response = await fetch(
+        `/api/posts?type=${value}&limit=${limit}&sub=${subReddit}&nsfw=${isNsfw}`
+      );
+      const posts = await response.json();
+      const newPosts = makePosts(posts, isNsfw);
+      setAllPosts(newPosts);
+      setPosts(newPosts.slice(0, 5));
+      setIndex(5);
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePagination = (isNext) => {
@@ -90,16 +93,19 @@ const Types = () => {
 
   useEffect(() => {
     const fetchInitialPosts = async () => {
-      const response = await fetch(
-        // COMMENTING BELOW LINE AS THE API ROUTE DOESN'T SEEM TO WORK WHEN DEPLOYED
-        // `/api/posts?type=${type}&limit=150&sub=${subReddit}&nsfw=${isNsfw}`
-        `https://www.reddit.com/r/${subReddit}/${type}.json?limit=${limit}`
-      );
-      const posts = await response.json();
-      const newPosts = makePosts(posts, isNsfw);
-      setAllPosts(newPosts);
-      setPosts(newPosts.slice(0, 5));
-      setLoading(false);
+      try {
+        const response = await fetch(
+          `/api/posts?type=${type}&limit=${limit}&sub=${subReddit}&nsfw=${isNsfw}`
+        );
+        const posts = await response.json();
+        const newPosts = makePosts(posts, isNsfw);
+        setAllPosts(newPosts);
+        setPosts(newPosts.slice(0, 5));
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     setLoading(true);
